@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <!-- 引入样式 -->
+    <link rel="stylesheet" href="https://unpkg.com/element-ui@1.4/lib/theme-default/index.css">
+</head>
+<body>
+<div id="app">
+    <el-button @click="test()">按钮</el-button>
+    <el-dialog v-model="visible" title="Hello world">
+        <p>欢迎使用 Element</p>
+    </el-dialog>
+</div>
+
+<div id="div1" data-text="hello-world"></div>
+
+
+
+</p>
+</body>
+<!-- 先引入 Vue -->
+<script src="https://unpkg.com/vue@2.5/dist/vue.js"></script>
+<!-- 引入组件库 -->
+<script src="https://unpkg.com/element-ui@1.4/lib/index.js"></script>
+<script>
+    new Vue({
+        el: '#app',
+        data: function() {
+            return {
+                visible: false,
+                userMessage: [{
+                    id: "",
+                    name: "",
+                    phone: "",
+                    email: "",
+                    gender: "",
+                    bankAccount: "",
+                    password: ""
+                }],
+                testUser:{
+                    "name": "测试1",
+                    "phone": "xx",
+                    "email": "xx",
+                    "gender": "xx",
+                    "bankAccount": "xx",
+                    "password": "xx"
+                }
+            }
+        },
+
+        methods:{
+            signIn(){
+                //跳转至注册页面
+
+            },
+            test(){
+                // this.$message('这是一条消息提示');
+                axios.post("http://localhost:9000/addUserB",{
+                    "name": "测试2",
+                    "phone": "xx",
+                    "email": "xx",
+                    "gender": "xx",
+                    "bankAccount": "xx",
+                    "password": "xx"
+                }).then((response) => {
+                    this.$message(response.data);
+                })
+
+            }
+        }
+
+    })
+</script>
+</html>

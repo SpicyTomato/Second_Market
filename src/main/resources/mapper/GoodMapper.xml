@@ -1,0 +1,221 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.alliance.second_used_translation.mapper.GoodMapper">
+  <resultMap id="BaseResultMap" type="com.alliance.second_used_translation.domain.Good">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="category" jdbcType="VARCHAR" property="category" />
+    <result column="size" jdbcType="VARCHAR" property="size" />
+    <result column="repertory" jdbcType="VARCHAR" property="repertory" />
+    <result column="used_degree" jdbcType="VARCHAR" property="usedDegree" />
+    <result column="update_at" jdbcType="TIMESTAMP" property="updateAt" />
+    <result column="update_by" jdbcType="VARCHAR" property="updateBy" />
+    <result column="insert_by" jdbcType="VARCHAR" property="insertBy" />
+    <result column="insert_at" jdbcType="TIMESTAMP" property="insertAt" />
+    <result column="is_valid" jdbcType="INTEGER" property="isValid" />
+    <result column="good_snap" jdbcType="VARCHAR" property="goodSnap" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, name, category, size, repertory, used_degree, update_at, update_by, insert_by,
+    insert_at, is_valid, good_snap
+  </sql>
+
+  <select id="getGoodCount" resultType="java.lang.Integer">
+    select count(*)
+    from Good
+  </select>
+
+  <select id="getAllGoods" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from Good
+    where is_valid = 1 AND repertory >0
+  </select>
+
+  <select id="selectByCategory" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from Good
+    where category like concat('%',#{category,jdbcType=VARCHAR},'%') AND is_valid = 1
+  </select>
+
+  <select id="selectByName" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from Good
+    where name like concat('%',#{name,jdbcType=VARCHAR},'%') AND is_valid = 1
+  </select>
+
+  <select id="selectByOwner" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from Good
+    where insert_by = #{insert_by,jdbcType=VARCHAR} AND is_valid = 1 AND repertory >0
+
+  </select>
+
+  <select id="selectByUpdateBy" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from Good
+    where update_by = #{update_by,jdbcType=VARCHAR} AND is_valid = 1
+
+  </select>
+
+
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from Good
+    where id = #{id,jdbcType=INTEGER} AND is_valid = 1
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from Good
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.alliance.second_used_translation.domain.Good">
+    insert into Good (id, name, category, 
+      size, repertory, used_degree,
+      update_at, update_by, insert_by, 
+      insert_at, is_valid, good_snap
+      )
+    values (#{id,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{category,jdbcType=VARCHAR}, 
+      #{size,jdbcType=VARCHAR}, #{repertory,jdbcType=VARCHAR}, #{usedDegree,jdbcType=VARCHAR},
+      #{updateAt,jdbcType=TIMESTAMP}, #{updateBy,jdbcType=VARCHAR}, #{insertBy,jdbcType=VARCHAR}, 
+      #{insertAt,jdbcType=TIMESTAMP}, #{isValid,jdbcType=INTEGER}, #{goodSnap,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.alliance.second_used_translation.domain.Good">
+    insert into Good
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="name != null">
+        name,
+      </if>
+      <if test="category != null">
+        category,
+      </if>
+      <if test="size != null">
+        size,
+      </if>
+      <if test="repertory != null">
+        repertory,
+      </if>
+      <if test="usedDegree != null">
+        used_degree,
+      </if>
+      <if test="updateAt != null">
+        update_at,
+      </if>
+      <if test="updateBy != null">
+        update_by,
+      </if>
+      <if test="insertBy != null">
+        insert_by,
+      </if>
+      <if test="insertAt != null">
+        insert_at,
+      </if>
+      <if test="isValid != null">
+        is_valid,
+      </if>
+      <if test="goodSnap != null">
+        good_snap,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="name != null">
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="category != null">
+        #{category,jdbcType=VARCHAR},
+      </if>
+      <if test="size != null">
+        #{size,jdbcType=VARCHAR},
+      </if>
+      <if test="repertory != null">
+        #{repertory,jdbcType=VARCHAR},
+      </if>
+      <if test="usedDegree != null">
+        #{usedDegree,jdbcType=VARCHAR},
+      </if>
+      <if test="updateAt != null">
+        #{updateAt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateBy != null">
+        #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="insertBy != null">
+        #{insertBy,jdbcType=VARCHAR},
+      </if>
+      <if test="insertAt != null">
+        #{insertAt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="isValid != null">
+        #{isValid,jdbcType=INTEGER},
+      </if>
+      <if test="goodSnap != null">
+        #{goodSnap,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.alliance.second_used_translation.domain.Good">
+    update Good
+    <set>
+      <if test="name != null">
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="category != null">
+        category = #{category,jdbcType=VARCHAR},
+      </if>
+      <if test="size != null">
+        size = #{size,jdbcType=VARCHAR},
+      </if>
+      <if test="repertory != null">
+        repertory = #{repertory,jdbcType=VARCHAR},
+      </if>
+      <if test="usedDegree != null">
+        used_degree = #{usedDegree,jdbcType=VARCHAR},
+      </if>
+      <if test="updateAt != null">
+        update_at = #{updateAt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateBy != null">
+        update_by = #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="insertBy != null">
+        insert_by = #{insertBy,jdbcType=VARCHAR},
+      </if>
+      <if test="insertAt != null">
+        insert_at = #{insertAt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="isValid != null">
+        is_valid = #{isValid,jdbcType=INTEGER},
+      </if>
+      <if test="goodSnap != null">
+        good_snap = #{goodSnap,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.alliance.second_used_translation.domain.Good">
+    update Good
+    set name = #{name,jdbcType=VARCHAR},
+      category = #{category,jdbcType=VARCHAR},
+      size = #{size,jdbcType=VARCHAR},
+      repertory = #{repertory,jdbcType=VARCHAR},
+      used_degree = #{usedDegree,jdbcType=VARCHAR},
+      update_at = #{updateAt,jdbcType=TIMESTAMP},
+      update_by = #{updateBy,jdbcType=VARCHAR},
+      insert_by = #{insertBy,jdbcType=VARCHAR},
+      insert_at = #{insertAt,jdbcType=TIMESTAMP},
+      is_valid = #{isValid,jdbcType=INTEGER},
+      good_snap = #{goodSnap,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

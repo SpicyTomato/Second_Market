@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.alliance.second_used_translation.mapper.MerchantMapper">
+  <resultMap id="BaseResultMap" type="com.alliance.second_used_translation.domain.Merchant">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="gender" jdbcType="VARCHAR" property="gender" />
+    <result column="shop_card_snap" jdbcType="VARCHAR" property="shopCardSnap" />
+    <result column="id_card_snap" jdbcType="VARCHAR" property="idCardSnap" />
+    <result column="update_by" jdbcType="VARCHAR" property="updateBy" />
+    <result column="update_at" jdbcType="TIMESTAMP" property="updateAt" />
+    <result column="insert_by" jdbcType="VARCHAR" property="insertBy" />
+    <result column="insert_at" jdbcType="TIMESTAMP" property="insertAt" />
+    <result column="is_valid" jdbcType="INTEGER" property="isValid" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, name, gender, shop_card_snap, id_card_snap, update_by, update_at, insert_by, 
+    insert_at, is_valid
+  </sql>
+
+  <select id="getMerchantCount" resultType="java.lang.Integer">
+    select count(*)
+    from Merchant
+  </select>
+
+  <select id="getAllMerchants" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from Merchant
+  </select>
+
+  <select id="selectByName" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from Merchant
+    where name = #{name,jdbcType=VARCHAR}
+  </select>
+
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from Merchant
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from Merchant
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.alliance.second_used_translation.domain.Merchant">
+    insert into Merchant (id, name, gender, 
+      shop_card_snap, id_card_snap, update_by, 
+      update_at, insert_by, insert_at, 
+      is_valid)
+    values (#{id,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{gender,jdbcType=VARCHAR}, 
+      #{shopCardSnap,jdbcType=VARCHAR}, #{idCardSnap,jdbcType=VARCHAR}, #{updateBy,jdbcType=VARCHAR}, 
+      #{updateAt,jdbcType=TIMESTAMP}, #{insertBy,jdbcType=VARCHAR}, #{insertAt,jdbcType=TIMESTAMP}, 
+      #{isValid,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.alliance.second_used_translation.domain.Merchant">
+    insert into Merchant
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="name != null">
+        name,
+      </if>
+      <if test="gender != null">
+        gender,
+      </if>
+      <if test="shopCardSnap != null">
+        shop_card_snap,
+      </if>
+      <if test="idCardSnap != null">
+        id_card_snap,
+      </if>
+      <if test="updateBy != null">
+        update_by,
+      </if>
+      <if test="updateAt != null">
+        update_at,
+      </if>
+      <if test="insertBy != null">
+        insert_by,
+      </if>
+      <if test="insertAt != null">
+        insert_at,
+      </if>
+      <if test="isValid != null">
+        is_valid,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="name != null">
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="gender != null">
+        #{gender,jdbcType=VARCHAR},
+      </if>
+      <if test="shopCardSnap != null">
+        #{shopCardSnap,jdbcType=VARCHAR},
+      </if>
+      <if test="idCardSnap != null">
+        #{idCardSnap,jdbcType=VARCHAR},
+      </if>
+      <if test="updateBy != null">
+        #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateAt != null">
+        #{updateAt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="insertBy != null">
+        #{insertBy,jdbcType=VARCHAR},
+      </if>
+      <if test="insertAt != null">
+        #{insertAt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="isValid != null">
+        #{isValid,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.alliance.second_used_translation.domain.Merchant">
+    update Merchant
+    <set>
+      <if test="name != null">
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="gender != null">
+        gender = #{gender,jdbcType=VARCHAR},
+      </if>
+      <if test="shopCardSnap != null">
+        shop_card_snap = #{shopCardSnap,jdbcType=VARCHAR},
+      </if>
+      <if test="idCardSnap != null">
+        id_card_snap = #{idCardSnap,jdbcType=VARCHAR},
+      </if>
+      <if test="updateBy != null">
+        update_by = #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateAt != null">
+        update_at = #{updateAt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="insertBy != null">
+        insert_by = #{insertBy,jdbcType=VARCHAR},
+      </if>
+      <if test="insertAt != null">
+        insert_at = #{insertAt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="isValid != null">
+        is_valid = #{isValid,jdbcType=INTEGER},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.alliance.second_used_translation.domain.Merchant">
+    update Merchant
+    set name = #{name,jdbcType=VARCHAR},
+      gender = #{gender,jdbcType=VARCHAR},
+      shop_card_snap = #{shopCardSnap,jdbcType=VARCHAR},
+      id_card_snap = #{idCardSnap,jdbcType=VARCHAR},
+      update_by = #{updateBy,jdbcType=VARCHAR},
+      update_at = #{updateAt,jdbcType=TIMESTAMP},
+      insert_by = #{insertBy,jdbcType=VARCHAR},
+      insert_at = #{insertAt,jdbcType=TIMESTAMP},
+      is_valid = #{isValid,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>
